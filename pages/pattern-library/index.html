@@ -1,0 +1,373 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-857GEQXXK1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-857GEQXXK1');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Joe Vessell PBIS Rewards Pattern Library Project</title>
+    <meta name="description" content="Joe Vessell's portfoilo website creator and maintainer of brands and pattern libraries">
+    <meta name="keywords" content="branding, user experience, Wordpress development, React development, front-end development, web animation and free hand illustration">
+    <meta name="author" content="Joe Vessell">
+
+    <meta property="og:title" content="Schoolwio Case Study">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.joevessell.com/">
+    <meta property="og:description" content="branding, user experience, Wordpress development, React development, web animation and free hand illustrations">
+    <meta property="og:image" content="image.png">
+
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="../..//favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../..//apple-touch-icon.png">
+
+    <link rel="stylesheet" href="../../styles.css?v=5.0">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+</head>
+
+<body id="pattern-library" class="case-study">
+  
+
+<header>
+    <div class="header-nav">
+        <section class="container container-header">
+            <a class="logo" href="https://joevessell.com/">Joe Vessell</a>
+            <nav>
+                <a href="https://joevessell.com/#about">About</a>
+                <a href="https://joevessell.com/#work">Work</a>
+                <a href="https://joevessell.com/#contact">Social</a>
+            </nav>
+        </section>  
+    </div>
+
+    <!-- <section class="container container-banner">
+        <img src="images/pattern-library-final-transparent.png" alt="PBIS Rewards Pattern Library Banner">
+    </section> -->
+<!-- <div class="background"></div> -->
+</header>
+
+<main>
+    <section class="container">
+        <article>
+            
+            <h1><span class="details">Draft</span> PBIS Rewards Pattern Libraries Case Study</h1>
+            <h2>Designing and creating pattern libraries in a SCRUM environment</h2>
+            <div class="project-types">
+                <p>
+                    <strong>Type:</strong> Pattern Libraries Desktop and Mobile Applications<br/>
+                    <strong>Roles:</strong> Creator and Maintainer<br/>
+                    <strong>Year:</strong> 2018 - Present
+                </p>
+            </div>
+            <p>PBIS Rewards is a web and mobile application for teachers, students, and family members to manage their PBIS program. The application is used by over 20,000 schools in the United States. I was the sole designer and front-end developer for the application. The team I collaborated with during this project consisted of a diverse group, comprising a product owner, sales staff, support staff, quality assurance specialist, and developers. The pattern library helped the development team create a consistent user experience and speed up development time.</p>
+            <p>The pattern libraries are built with the same technology as the applications which are vanilla HTML, CSS, and Javascript. They are organized using Atomic Design methodology with WCAG Level AA guidelines in mind. They are a record of the past elements and an example of how elements should look and function in the future.</p>
+        
+
+            <h2>The Start of the Pattern Libraries</h2>
+            <p>The applications had already been worked on for a few years before I was brought in to update the user interface. We started with the Teacher Desktop application in 2019. Some of the problems that were fixed were inconsistent typography, buttons, and information architecture. Accessibility issues such as color contrast ratios and non-semantic HTML. Many elements including colors and typography being used were off-brand. Icons were being pulled from three different libraries and were inconsistent between desktop and mobile.</p>
+
+        </article>
+    </section>
+
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards Old User Interface" src="images/pattern-library-staff-start.png"/>
+                <figcaption>PBIS Rewards Staff Desktop and Mobile Old User Interface</figcaption>
+            </figure>
+            
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>New User Interface</h2>
+
+            <p>The new desktop user interface was implemented by five developers in three, two week sprints. This included 20 features, 50 reports, 7 dashboards and a district control page. The new icon library was Font Awesome 5. All the colors were addressed by color contrast ratio and moved to a on brand equivalent.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards New User Interface" src="images/pattern-library-staff-current.png"/>
+                <figcaption>PBIS Rewards Staff Desktop and Mobile New User Interface</figcaption>
+            </figure>
+        </article>
+    </section>
+
+
+    <section class="container">
+        <article>
+            <h2>Staff Pattern Library</h2>
+            <p>On the right, in the gray box is a section of the colors in the pattern library. Colors were defined by their HEX value and custom properties were created. At the start of the project custom properties could not be used because of support of older browsers in schools. To the left of the sample color section are all the colors currently in use on the staff desktop application. On the far left, is the entire menu for the staff desktop application to give an idea of scale and amount of the components.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="Staff Pattern Library Color Focus" src="images/pattern-library-colors.png"/>
+                <figcaption>Staff Pattern Library Color Focus</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Chart Technical Example</h2>
+            <p>Sometimes you have to know the limitations of a javascript library in order to design for it. There were six, two weeks sprints with five developers to create all 50 reports and seven dashboards in the applications. All reports were created with chart.js a very robust chart javascript library. The one below is one of the more complex examples. This chart shows the average amount of referrals during the day with a bar chart and the amounts of referrals by time with line chart. The code The code I wrote for the developers is in black below the chart example.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="Charts Example and Code" src="images/pattern-library-charts.png"/>
+                <figcaption>Charts Design and Code for Chart.js</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>The Pattern Library Process</h2>
+            <p>This is an overview of adding elements to the pattern library. I'll walk through the process step by step with the Student Desktop application in the below examples.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards Old UI" src="images/pattern-library-process.png"/>
+                <figcaption>Process</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section id="student-app" class="container">
+        <article>
+            <h2>PBIS Rewards Old Student Desktop Application</h2>
+            <p>Our Desktop Student application had many of the same problems as the Staff Desktop application. There were many color contrast issues, inconsistent functionality with buttons, and an unnecessary column-based layout. The layout was created because the application had to fit onto a portrait-orientated tablet and none of the developers knew how to code a responsive layout.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="Old Student Application" src="images/pattern-library-student-old-cropped.png"/>
+                <figcaption>Old Student Application</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Wireframe</h2>
+            <p>After having discussions with the project manager, sales, support, and developers. A wireframe was laid out to further discussion. A possible school banner was suggested. However, not all schools have banners and the technical challenges of giving them a builder would be out of scope. We know the store is important to students because that's the main way they spend points. However, not all schools have stores. So, including it on the main page without a replacement wasn't an option. In the top right corner below the header. There was a lot of discussion around these elements because they all related to things about the student's access and profile including: activating the mobile application, signing out if they are on a shared device, or doing a social emotional learning (SEL) check-in to tell the teacher and staff how they are doing today.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="Wireframe" src="images/pattern-library-wireframe.png"/>
+                <figcaption>Wireframe</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Figma Elements</h2>
+            <p>As I work on the design a Figma component library is built up in a separate file. They are built using the same Atomic Design methodology as the coded pattern libraries.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="Building of Figma Components" src="images/pattern-library-figma-components-cropped.png"/>
+                <figcaption>Building of Figma Components</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>New Student Desktop and Mobile Application</h2> 
+            <p>A student banner was created for student's to easily identify they were using the correct application. Below shortcut cards were created to pull certain locations out of the navigation that student's would most likely want to use. In the student's profile column their points and SEL check were added. Then more access features were moved to a drawer and profile page. Icons were cleaned up and made consistent with the other applications.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="New Student Desktop and Mobile Application" src="images/pattern-library-student-current.png"/>
+                <figcaption>New Student Desktop and Mobile Application</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Responsive Design</h2>
+            <p>Once the Figma designs were finalized, I transformed them into fully functional responsive pages. Using my coding skills, I crafted the HTML and CSS breakpoints that would serve as guidelines for the developers. Additionally, I successfully tackled the challenge of creating two additional responsive page layouts to complement the existing designs.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards Old UI" src="images/pattern-library-responsive2.gif"/>
+                <figcaption>Responsive Design</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Interactions and transitions</h2>
+            <p>Also, I created all of the javascript interactions and CSS transitions. Making sure the user visuals and experience were consistent and on-brand throughout the application.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards Old UI" src="images/pattern-library-actions.gif"/>
+                <figcaption>Interactions and transitions</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>Pattern Library</h2>
+            <p>All of this went into the pattern library for developers, quality assurance, and project managers to reference. This used the same methodologies as the staff pattern library breaking elements down into their smallest pieces: colors, typography, and icons and working your way biggest elements templates and pages.</p>
+        </article>
+    </section>
+
+
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards Old UI" src="images/pattern-library-student.png"/>
+                <figcaption>Student Pattern Library</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>User Interfaces Checks</h2>
+            <p>After the developers finish their work, a comprehensive user interface check is conducted. I compare the initial design with the implemented version. Then make necessary adjustments in the browser console and make a screenshot. The screens added to Jira and move the corresponding card to the "needs work" column for further attention. This meticulous process ensures a polished and consistent user interface.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="User Interfaces Checks" src="images/pattern-library-ui-check.png"/>
+                <figcaption>User Interfaces Checks</figcaption>
+            </figure>
+        </article>
+    </section>
+
+    <section class="container">
+        <article>
+            <h2>PBIS Rewards and Others Pattern Libraries</h2>
+            <p>I have been working on pattern libraries for over seven years. I created the PBIS Rewards one to start. Later, I created them for various internal startup ideas at Motivating Systems including TRiO Perks, Workplace Rewards, a self launching application, and Badge Builder for the PBIS Rewards Application.</p>
+        </article>
+    </section>
+
+    <section class="ribbon">
+        <article class="container">
+            <figure>
+                <img alt="PBIS Rewards and Others Pattern Libraries" src="images/pattern-library-final.png"/>
+                <figcaption>PBIS Rewards and Others Pattern Libraries</figcaption>
+            </figure>
+        </article>
+    </section>
+
+ 
+
+    <section class="ribbon final">
+        <article class="container final-ribbon">
+            <div class="final-container">
+                <div class="next-steps-icon">
+                    <svg><use xlink:href="../../images/solid.svg#flag"></use></svg>
+                </div>
+                <h3>Next Steps</h3>
+                
+                <!-- <a target="_blank" class="primary" href="https://schoolwio.com/">
+                    <span>Student Prototype Page</span>
+                    <svg><use xlink:href="../../images/solid.svg#arrow-right"></use></svg>
+                </a><br> -->
+                <a class="primary" href="https://joevessell.com/#support-site">
+                    <span>Next Project</span>
+                    <svg><use xlink:href="../../images/solid.svg#arrow-right"></use></svg>
+                </a>
+            </div>
+        </article>
+    </section>
+
+
+    
+ 
+
+</main>
+
+<footer>
+    <section id="contact" class="container">
+
+        <article>
+            <h2>Social</h2>
+            <p>
+                <a target="_blank" class="primary" href="https://www.linkedin.com/in/joe-vessell-167a4a12/">
+                    <svg><use xlink:href="../../images/brands.svg#linkedin"></use></svg>
+                    <span>LinkedIn</span>
+                    
+                </a>
+                <a target="_blank" class="primary" href="https://www.goodreads.com/user/show/13632898-joe-vessell">
+                    <svg><use xlink:href="../../images/brands.svg#goodreads"></use></svg>
+                    <span>Goodreads</span>
+                    
+                </a>
+                <a target="_blank" class="primary" href="https://dribbble.com/joevessell">
+                    <svg><use xlink:href="../../images/brands.svg#dribbble"></use></svg>
+                    <span>Dribbble</span>
+                    
+                </a>
+                <a target="_blank" class="primary" href="https://codepen.io/joevessell">
+                    <svg><use xlink:href="../../images/brands.svg#codepen"></use></svg>
+                    <span>CodePen</span>
+                    
+                </a>
+            </p>
+            
+        </article>
+
+    </section>  
+
+</footer>
+
+</body>
+</html>
