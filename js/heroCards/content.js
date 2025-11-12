@@ -39,18 +39,19 @@ const heroCards = [
         link: "#greatgoals",
         linkLocation: "same"
     },
+    
     {	
-        key: 8,
-        title: "PBIS Rewards Support",
-        details: 'UX Researcher, Designer, and Developer',
-        colorHighlight: "#3c60aa",
-        colorBackground: "#f8f9fa",
-        img: "card-pbis-rewards-support.png",
-        link: "#support-site",
+        key: 5,
+        title: "Matrix Design Group Product Branding",
+        details: 'Designer',
+        colorHighlight: "#0568a3",
+        colorBackground: "#ffffff",
+        img: "card-matrix-product-brand.png",
+        link: "#matrixproductbranding",
         linkLocation: "same"
     },
     {	
-        key: 5,
+        key: 6,
         title: "Discount Dungeon",
         details: 'Designer and Developer',
         colorHighlight: "#5c1b75",
@@ -60,7 +61,7 @@ const heroCards = [
         linkLocation: "same"
     },
     {	
-        key: 6,
+        key: 7,
         title: "PBIS Rewards Student",
         details: 'Designer, Front-End Developer',
         colorHighlight: "#016132",
@@ -70,7 +71,7 @@ const heroCards = [
         linkLocation: "new"
     },
     {	
-        key: 7,
+        key: 8,
         title: "Radio Silence Band Shirt",
         details: 'Illustrator',
         colorHighlight: "#26516e",
@@ -80,7 +81,7 @@ const heroCards = [
         linkLocation: "only"
     },
     {	
-        key: 8,
+        key: 9,
         title: "PBIS Rewards 10 Dashboards and 50 Reports",
         details: 'Designer and Front-End Developer',
         colorHighlight: "#16428e",
@@ -88,6 +89,16 @@ const heroCards = [
         img: "card-pbis-rewards-reports.png",
         link: "###",
         linkLocation: "only"
+    },
+    {	
+        key: 10,
+        title: "PBIS Rewards Support",
+        details: 'UX Researcher, Designer, and Developer',
+        colorHighlight: "#3c60aa",
+        colorBackground: "#f8f9fa",
+        img: "card-pbis-rewards-support.png",
+        link: "#support-site",
+        linkLocation: "same"
     }
     
 ]
