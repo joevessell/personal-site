@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+	<head>
+            <!-- Verison 0.0.2 -->
+		<meta charset="utf-8">
+		<title>Discount Dungeon</title>
+
+            <!-- Fav Icons -->
+            <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+            <link rel="manifest" href="images/favicon/site.webmanifest">
+
+            <link rel="stylesheet" href="css/styles.css"/>
+            <script src="js/three.js"></script>
+		<script>
+
+                  // Valid Move
+                  var playerInput = new Object();
+
+                  const NORTH = 100;
+                  const EAST = 101;
+                  const WEST = 102;
+                  const SOUTH = 103;
+                  
+                  function validMove(mazeGrid, x, y, direction){
+                        if(direction == NORTH)
+                        {
+                              return !mazeGrid[x][y].northWall;
+                        }
+                        else if(direction == EAST)
+                        {
+                              return !mazeGrid[x][y].eastWall;
+                        }
+                        else if(direction == SOUTH)
+                        {
+                              return !mazeGrid[x][y].southWall;
+                        }
+                        else if(direction == WEST)
+                        {
+                              return !mazeGrid[x][y].westWall;
+                        }
+                        return false;
+                  }
+
+                  // Frame Rate Fix Time Contsant
+                  var last_update = Date.now();
+
+                  // Controls
+                  var playerInput = new Object();
+
+                  function doKeyDown(event){
+                        var keynum;
+
+                        if (window.event){ //Browser is IE
+                              keynum = event.keyCode;
+                        }
+                        else {
+                              keynum = event.which;
+                        }
+
+                        if (keynum == 37){
+                              playerInput.left = 1;
+                        }
+                        else if (keynum == 38) {
+                              playerInput.up = 1;
+                        }
+                        else if (keynum == 39) {
+                              playerInput.right = 1;
+                        }
+                        else if (keynum == 40) {
+                              playerInput.down = 1;
+                        }
+                  }
+
+                  function doKeyUp(event){
+                        var keynum;
+
+                        if (window.event){ //Browser is IE
+                              keynum = event.keyCode;
+                        }
+                        else {
+                              keynum = event.which;
+                        }
+
+                        if (keynum == 37){
+                              playerInput.left = 0;
+                        }
+                        else if (keynum == 38){
+                              playerInput.up = 0;
+                        }
+                        else if (keynum == 39){
+                              playerInput.right = 0;
+                        }
+                        else if (keynum == 40){
+                              playerInput.down = 0;
+                        }
+                  }
+
+                  // Wall Placement
+                  function createMazeGrid(){
+                        function MazeCell(northWall, eastWall, southWall, westWall){
+                              this.northWall = northWall;
+                              this.eastWall = eastWall;
+                              this.southWall = southWall;
+                              this.westWall = westWall;
+                        }
+
+                        var mazeGrid = [
+                              Array(12), Array(12), Array(12), 
+                              Array(12), Array(12), Array(12),
+                              Array(12), Array(12), Array(12)       
+                        ];
+
+                        // Row 1
+                        mazeGrid[0][0] = new MazeCell(1,0,0,1);
+                        mazeGrid[0][1] = new MazeCell(1,0,0,0);
+                        mazeGrid[0][2] = new MazeCell(1,0,0,0);
+
+                        mazeGrid[0][3] = new MazeCell(1,1,1,0);
+                        mazeGrid[0][4] = new MazeCell(1,0,0,1);
+                        mazeGrid[0][5] = new MazeCell(1,1,1,0);
+
+                        mazeGrid[0][6] = new MazeCell(1,0,0,1);
+                        mazeGrid[0][7] = new MazeCell(1,0,1,0);
+                        mazeGrid[0][8] = new MazeCell(1,1,0,0);
+
+                        mazeGrid[0][9] = new MazeCell(1,0,0,1);
+                        mazeGrid[0][10] = new MazeCell(1,0,0,0);
+                        mazeGrid[0][11] = new MazeCell(1,1,0,0);
+
+                        // Row 2
+                        mazeGrid[1][0] = new MazeCell(0,1,0,1);
+                        mazeGrid[1][1] = new MazeCell(0,1,0,1);
+                        mazeGrid[1][2] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[1][3] = new MazeCell(1,0,0,1);
+                        mazeGrid[1][4] = new MazeCell(0,1,1,0);
+                        mazeGrid[1][5] = new MazeCell(1,0,0,1);
+
+                        mazeGrid[1][6] = new MazeCell(0,1,1,0);
+                        mazeGrid[1][7] = new MazeCell(1,1,0,1);
+                        mazeGrid[1][8] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[1][9] = new MazeCell(0,0,0,1);
+                        mazeGrid[1][10] = new MazeCell(0,0,0,0);
+                        mazeGrid[1][11] = new MazeCell(0,1,0,0);
+
+                        // Row 3
+                        mazeGrid[2][0] = new MazeCell(0,1,1,1);
+                        mazeGrid[2][1] = new MazeCell(0,1,0,1);
+                        mazeGrid[2][2] = new MazeCell(0,0,1,1);
+
+                        mazeGrid[2][3] = new MazeCell(0,1,1,0);
+                        mazeGrid[2][4] = new MazeCell(1,1,0,1);
+                        mazeGrid[2][5] = new MazeCell(0,0,0,1);
+
+                        mazeGrid[2][6] = new MazeCell(1,0,1,0);
+                        mazeGrid[2][7] = new MazeCell(0,1,1,0);
+                        mazeGrid[2][8] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[2][9] = new MazeCell(0,0,0,1);
+                        mazeGrid[2][10] = new MazeCell(0,0,0,0);
+                        mazeGrid[2][11] = new MazeCell(0,1,0,0);
+
+                        // Row 4
+                        mazeGrid[3][0] = new MazeCell(1,0,0,1);
+                        mazeGrid[3][1] = new MazeCell(0,1,1,0);
+                        mazeGrid[3][2] = new MazeCell(1,0,0,1);
+
+                        mazeGrid[3][3] = new MazeCell(1,0,1,0);
+                        mazeGrid[3][4] = new MazeCell(0,1,1,0);
+                        mazeGrid[3][5] = new MazeCell(0,0,1,1);
+
+                        mazeGrid[3][6] = new MazeCell(1,1,0,0);
+                        mazeGrid[3][7] = new MazeCell(1,0,0,1);
+                        mazeGrid[3][8] = new MazeCell(0,1,0,0);
+
+                        mazeGrid[3][9] = new MazeCell(1,0,0,1);
+                        mazeGrid[3][10] = new MazeCell(1,1,0,0);
+                        mazeGrid[3][11] = new MazeCell(1,1,0,0);
+
+                        // Row 5
+                        mazeGrid[4][0] = new MazeCell(0,0,0,1);
+                        mazeGrid[4][1] = new MazeCell(1,0,1,0);
+                        mazeGrid[4][2] = new MazeCell(0,1,1,0);
+
+                        mazeGrid[4][3] = new MazeCell(1,0,0,1);
+                        mazeGrid[4][4] = new MazeCell(1,0,1,0);
+                        mazeGrid[4][5] = new MazeCell(1,0,1,0);
+
+                        mazeGrid[4][6] = new MazeCell(0,1,0,0);
+                        mazeGrid[4][7] = new MazeCell(0,0,0,1);
+                        mazeGrid[4][8] = new MazeCell(0,0,0,0);
+
+                        mazeGrid[4][9] = new MazeCell(0,0,0,0);
+                        mazeGrid[4][10] = new MazeCell(0,1,0,0);
+                        mazeGrid[4][11] = new MazeCell(0,1,0,0);
+
+                        // Row 6
+                        mazeGrid[5][0] = new MazeCell(0,1,0,1);
+                        mazeGrid[5][1] = new MazeCell(1,0,0,1);
+                        mazeGrid[5][2] = new MazeCell(1,1,0,0);
+
+                        mazeGrid[5][3] = new MazeCell(0,0,1,1);
+                        mazeGrid[5][4] = new MazeCell(1,0,1,0);
+                        mazeGrid[5][5] = new MazeCell(1,1,0,0);
+
+                        mazeGrid[5][6] = new MazeCell(0,1,0,1);
+                        mazeGrid[5][7] = new MazeCell(0,0,1,1);
+                        mazeGrid[5][8] = new MazeCell(0,1,1,0);
+
+                        mazeGrid[5][9] = new MazeCell(0,0,1,1);
+                        mazeGrid[5][10] = new MazeCell(0,1,1,0);
+                        mazeGrid[5][11] = new MazeCell(0,1,1,0);
+
+                        // Row 7
+                        mazeGrid[6][0] = new MazeCell(0,1,0,1);
+                        mazeGrid[6][1] = new MazeCell(0,1,0,1);
+                        mazeGrid[6][2] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[6][3] = new MazeCell(1,0,0,1);
+                        mazeGrid[6][4] = new MazeCell(1,0,1,0);
+                        mazeGrid[6][5] = new MazeCell(0,1,0,0);
+
+                        mazeGrid[6][6] = new MazeCell(0,0,1,1);
+                        mazeGrid[6][7] = new MazeCell(1,1,0,0);
+                        mazeGrid[6][8] = new MazeCell(1,1,0,1);
+
+                        mazeGrid[6][9] = new MazeCell(0,0,0,1);
+                        mazeGrid[6][10] = new MazeCell(0,0,0,0);
+                        mazeGrid[6][11] = new MazeCell(0,1,0,0);
+
+                        // Row 8
+                        mazeGrid[7][0] = new MazeCell(0,1,0,1);
+                        mazeGrid[7][1] = new MazeCell(0,1,0,1);
+                        mazeGrid[7][2] = new MazeCell(0,0,1,1);
+
+                        mazeGrid[7][3] = new MazeCell(0,1,1,0);
+                        mazeGrid[7][4] = new MazeCell(1,1,0,1);
+                        mazeGrid[7][5] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[7][6] = new MazeCell(1,1,0,1);
+                        mazeGrid[7][7] = new MazeCell(0,1,0,1);
+                        mazeGrid[7][8] = new MazeCell(0,1,0,1);
+
+                        mazeGrid[7][9] = new MazeCell(0,0,0,1);
+                        mazeGrid[7][10] = new MazeCell(0,0,0,0);
+                        mazeGrid[7][11] = new MazeCell(0,1,0,0);
+
+                        // Row 9
+                        mazeGrid[8][0] = new MazeCell(0,0,1,1);
+                        mazeGrid[8][1] = new MazeCell(0,0,1,0);
+                        mazeGrid[8][2] = new MazeCell(1,0,1,0);
+
+                        mazeGrid[8][3] = new MazeCell(1,0,1,0);
+                        mazeGrid[8][4] = new MazeCell(0,1,1,0);
+                        mazeGrid[8][5] = new MazeCell(0,0,1,1);
+
+                        mazeGrid[8][6] = new MazeCell(0,1,1,0);
+                        mazeGrid[8][7] = new MazeCell(0,0,1,1);
+                        mazeGrid[8][8] = new MazeCell(0,1,1,0);
+
+                        mazeGrid[8][9] = new MazeCell(0,0,1,1);
+                        mazeGrid[8][10] = new MazeCell(0,0,1,0);
+                        mazeGrid[8][11] = new MazeCell(0,1,1,0);
+
+                        return mazeGrid;
+                  }
+
+                  // Wall Logic
+                  function placeWallGraphics(scene, mazeGrid){
+                        var wallGeometry = new THREE.PlaneGeometry( 1, 0.5 );
+
+                        mazeGrid.forEach(function(mazeRow, rowCount){
+                              
+                              mazeRow.forEach(function(mazeCell, colCount){
+ 
+                              if(mazeCell.northWall)
+                                    placeWall(colCount, rowCount, 'n');
+                              if(mazeCell.eastWall)
+                                    placeWall(colCount, rowCount, 'e');
+                              if(mazeCell.southWall)
+                                    placeWall(colCount, rowCount, 's');
+                              if(mazeCell.westWall)
+                                    placeWall(colCount, rowCount, 'w');
+                              });
+                        });
+
+                        function placeWall(x,y,direction){
+
+                              if (x > 8) {
+                                          var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/wall-2.png' );
+                                          var wallMaterial = new THREE.MeshLambertMaterial({
+                                                map: texture
+                                          });
+                              
+                              } else if ( x < 8 && y+1===x ) {
+
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-1.png' );
+                                    var wallMaterial = new THREE.MeshLambertMaterial({
+                                          map: texture
+                                    } );
+
+                              } else if ( x < 8 && x+2===y ) {
+
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-2.png' );
+                                    var wallMaterial = new THREE.MeshLambertMaterial({
+                                          map: texture
+                                    } );
+                              
+                              } else if ( x < 8 && y+2===x || x+1===y ) {
+
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-3.png' );
+                                    var wallMaterial = new THREE.MeshLambertMaterial({
+                                          map: texture
+                                    } );
+
+                               } else {
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-4.png' );
+                                    var wallMaterial = new THREE.MeshLambertMaterial({
+                                          map: texture
+                                    } );
+                              }
+
+                              var wall = new THREE.Mesh( wallGeometry, wallMaterial );
+                              wall.position.z = y*1;
+                              wall.position.x = x*1;
+                              if(direction == 'n'){
+                                    wall.position.z -= 0.5;
+                              }
+                              else if(direction == 'e'){
+                              wall.position.x += 0.5;
+                              wall.rotation.y = -Math.PI/2;
+                              }
+                              else if(direction == 's'){
+                              wall.position.z += 0.5;
+                              wall.rotation.y = Math.PI;
+                              }
+                              else if(direction == 'w'){
+                              wall.position.x -= 0.5;
+                              wall.rotation.y = Math.PI/2;
+                              }
+                              else{
+                              return false;
+                              }
+                              
+                              scene.add(wall);
+                        }
+                  }
+
+
+                              // Objects Placement
+                              function createCollectiblesList(){
+                                    var collectables = [];
+
+                                    collectables.push({
+                                          key: 1, x:0, y:1, 
+                                          action:function(){alert("You picked up a collectable");}     
+                                    });
+
+                                    collectables.push(
+                                          { key: 2, x:4, y:0, }
+                                    );
+
+                                    collectables.push(
+                                          { key: 3, x:8, y:1 }
+                                    );
+
+                                    collectables.push(
+                                          { key: 4, x:6, y:5 }
+                                    );
+
+                                    collectables.push(
+                                          { key: 5, x:4, y:6 }
+                                    );
+
+                                    collectables.push(
+                                          { key: 6, x:4, y:9,
+                                           action:function(){alert("You picked up a collectable");}, 
+                                          });
+
+                                    return collectables;
+
+                              }
+
+                              
+
+                              // Map Markers
+                              function placeCollectableGraphics(scene, collectables){
+                                    var collectableGeometry = new THREE.SphereGeometry( 5, 32, 32);
+                                    var collectableMaterial = new THREE.MeshStandardMaterial( {
+                                          color: 0xfcc742,
+                                          emissive: 0xF7941D,
+                                          emissiveIntensity: .5,
+                                          
+                                    } );
+
+                                    collectables.forEach(function(collectable){
+                                          var collectableObject = new THREE.Mesh(collectableGeometry, collectableMaterial);
+                                          collectableObject.position.z = collectable.x;
+                                          collectableObject.position.x = collectable.y;
+                                          collectableObject.scale.set( 0.02, 0.02, 0.02 );                                        
+                                          scene.add(collectableObject);
+                                         
+                                    });     
+                              }
+
+                              // If success equals 1 success opens and timer stops
+                              success = 0;
+                              // Object Detection
+                              function processCollectableCollisions(x, y,collectables,scene){     
+
+                                    collectables.forEach(function(collectable,index){
+                                          // if(collectable.x == x && collectable.y == y){
+                                          //       collectable.action(); //Run the object's event
+                                          //       scene.remove(collectable.objectRef); //Remove graphics from scene
+                                          //       collectables.splice(index,1); //Remove collectable from list
+                                          // }
+
+                                          if(collectable.x === x && collectable.y === y){
+                                                panelCounter(collectable.key);
+                                                
+                                                // scene.remove(collectable.objectRef);
+                                                // collectable.color.setHex(0xef4136);
+                                                
+
+                                                if (x===4 && y===9) {
+                                                      successModal();
+                                                      collectables.splice(index,1); //Remove collectable from list
+                                                      success = 1;
+                                                }
+                                                // console.log(x + ' ' + y)
+                                          }
+
+                                    });
+                              }
+
+
+
+                              // Store Items Placement
+                              function createItemsList(){
+                                    var items = [];
+
+                                    items.push(
+                                          { x:3, y:9, image: 'https://joevessell.com/discount-dungeon/images/item-1.jpg' }
+                                    );
+
+                                    items.push(
+                                          { x:3, y:10, image: 'https://joevessell.com/discount-dungeon/images/item-2.jpg' }
+                                    );
+
+                                    items.push(
+                                          { x:5, y:9, image: 'https://joevessell.com/discount-dungeon/images/item-3.jpg' }
+                                    );
+
+                                    items.push(
+                                          { x:5, y:10, image: 'https://joevessell.com/discount-dungeon/images/item-4.jpg' }
+                                    );
+
+                                    return items;
+                              }
+
+                              // Store Items Appearance
+                              function placeItemsGraphics(scene, items){
+                                    var itemsGeometry = new THREE.BoxGeometry( 0.30, 0.30, 0.30 );
+                                    
+                                    items.forEach(function(item){
+                                          var texture = new THREE.TextureLoader().load( item.image );
+                                          var itemsMaterial = new THREE.MeshStandardMaterial( {
+                                                
+                                                map: texture,
+                                          } );
+                                          var itemObject = new THREE.Mesh(itemsGeometry, itemsMaterial);
+                                          itemObject.position.z = item.x;
+                                          itemObject.position.x = item.y;
+                                          itemObject.rotation.y = -150;
+                                          itemObject.rotation.x = -150;
+                                          scene.add(itemObject);
+                                    });     
+                              }
+
+                              
+                  
+
+                  // Maze Build
+                  function runMaze() {
+
+                              // Setting up Scene
+                              var mazeCanvas = document.getElementById("mazeCanvas");
+                              var scene = new THREE.Scene();
+                              var renderer = new THREE.WebGLRenderer({ canvas: mazeCanvas });
+                              var camera = new THREE.PerspectiveCamera( 75, mazeCanvas.width/mazeCanvas.height, 0.1, 1000 ); // field of view (cone shape), aspect ratio, minimum and maximum distances (defaults)
+
+                              var bgTexture = new THREE.TextureLoader().load("images/background.png");
+                              bgTexture.minFilter = THREE.LinearFilter;
+                              scene.background = bgTexture;
+
+                               //Maze creation functions
+                              var mazeGrid = createMazeGrid();  
+                              placeWallGraphics(scene, mazeGrid);
+
+                              //Map Markers
+                              var collectables = createCollectiblesList();
+                              placeCollectableGraphics(scene, collectables);
+                              panelNumber(collectables.length);
+                              
+
+                              //Store Items
+                              var items = createItemsList();
+                             
+                              placeItemsGraphics(scene, items);
+
+                              // Lightning
+                              var playerPointLight = new THREE.PointLight();
+                              playerPointLight.position.set( 0, 0, 0 );
+                              scene.add( playerPointLight );
+
+                              // Start at End
+                              // camera.position.x = 8;
+                              // camera.position.z = 4;
+                              // var startX = 8;
+                              // var startZ = 4;
+
+                              // console.log(camera.position.x);
+                              // console.log(camera.position.z);
+                              
+
+                              // Movement forcing 90 degrees only
+                              // Angle State
+                              const WAITING = 1;
+                              const TURNING_RIGHT = 2;
+                              const TURNING_LEFT = 3;
+
+                              var state = WAITING;
+
+                              var currentDirection = 0;
+                              var turningArc = 0;
+
+                              var direction = NORTH;
+
+                              const MOVING_FORWARD = 4;
+
+                              var walkDistance = 0;
+                              var startX = 0;
+                              var startZ = 0;
+
+                              // Player Location
+                              var player = {};
+                              player.gridX = 0;
+                              player.gridY = 0;
+                              player.direction = NORTH;
+                              // console.log(player);
+                            
+                              // Render Function 
+                              var render = function () {
+                                    
+                                    // Frame Rate Fix
+                                    var now = Date.now();
+
+                                    var deltaTime = now - last_update;
+                                    last_update = now;
+
+                                    requestAnimationFrame( render );
+ 
+                                    // Movement forcing 90 degrees only
+                                    if(state == WAITING){
+                                          if (playerInput.left) {
+                                                state = TURNING_LEFT;
+                                                switch(direction) {
+                                                      case NORTH:
+                                                      direction = WEST;
+                                                      break;
+                                                      case EAST:
+                                                      direction = NORTH;
+                                                      break;
+                                                      case SOUTH:
+                                                      direction = EAST;
+                                                      break;
+                                                      case WEST:
+                                                      direction = SOUTH;
+                                                      break;
+                                                }
+                                                player.direction = direction; //Sync player and camera
+                                          } else if(playerInput.right) {
+                                                state = TURNING_RIGHT;
+                                                switch(direction) {
+                                                      case NORTH:
+                                                      direction = EAST;
+                                                      break;
+                                                      case EAST:
+                                                      direction = SOUTH;
+                                                      break;
+                                                      case SOUTH:
+                                                      direction = WEST;
+                                                      break;
+                                                      case WEST:
+                                                      direction = NORTH;
+                                                      break;
+                                                }
+                                                player.direction = direction; //Sync player and camera
+                                          } else if (playerInput.up && validMove(mazeGrid, player.gridX, player.gridY, player.direction)) {
+                                                walkingDistance = 0;
+                                                startX = camera.position.x;
+                                                startZ = camera.position.z;
+                                                state = MOVING_FORWARD;
+                                                switch(direction){
+                                                      case NORTH:
+                                                      player.gridX--;
+                                                      break;
+                                                      case EAST:
+                                                      player.gridY++;
+                                                      break;
+                                                      case SOUTH:
+                                                      player.gridX++;
+                                                      break;
+                                                      case WEST:
+                                                      player.gridY--;
+                                                      break;
+                                                }
+                                          }
+
+
+                                    }
+
+                                    if(state == TURNING_LEFT) {
+                                          turningArc += Math.PI/2 * deltaTime/1000;
+                                          if(turningArc >= Math.PI/2){
+                                                turningArc = Math.PI/2;
+                                                currentDirection = currentDirection + turningArc;
+                                                turningArc = 0;
+                                                state = WAITING;
+                                          }
+                                          
+                                          camera.rotation.y = currentDirection + turningArc;
+                                          }
+
+                                    if(state == TURNING_RIGHT){
+                                          turningArc += Math.PI/2 * deltaTime/1000;
+                                          if(turningArc >= Math.PI/2){
+                                                turningArc = Math.PI/2;
+                                                currentDirection = currentDirection - turningArc;
+                                                turningArc = 0;
+                                                state = WAITING;
+                                          }
+
+                                          camera.rotation.y = currentDirection - turningArc;
+                                    }
+
+                                    if(state == MOVING_FORWARD) {
+
+                                          walkingDistance += 1 * deltaTime/1000;
+
+                                          if(walkingDistance >= 1) {
+                                                walkingDistance = 1;
+                                                state = WAITING;
+                                                processCollectableCollisions(player.gridX, player.gridY,collectables,scene);
+                                                
+                                          }
+
+                                          
+
+                                          switch(direction){
+                                                case NORTH:
+                                                camera.position.z = startZ - walkingDistance;
+                                                break;
+                                                case EAST:
+                                                camera.position.x = startX + walkingDistance;
+                                                break;
+                                                case SOUTH:
+                                                camera.position.z = startZ + walkingDistance;
+                                                break;
+                                                case WEST:
+                                                camera.position.x = startX - walkingDistance;
+                                                break;
+                                          }
+
+                                          playerPointLight.position.x = camera.position.x;
+                                          playerPointLight.position.y = camera.position.y;
+                                          playerPointLight.position.z = camera.position.z;
+
+                                    }
+
+                                    
+
+                                    renderer.render(scene, camera);
+                                   
+      
+                              };
+
+                              render();
+
+                              
+                  }
+
+		</script>
+
+            <script>    
+
+            
+            function restartGame() {
+                  location.reload();
+                  // document.getElementById("titleScreen").className += " overlayHide";
+                  // document.getElementById("startGame").className += " overlayHide";
+            }
+
+            
+
+
+            // Modal Functions      
+            function startGame() {
+                  document.getElementById("startGame").className += " overlayHide";
+                  document.getElementById("failGame").className += " overlayHide";
+                  document.getElementById("titleScreen").className += " overlayHide";
+                  document.getElementsByTagName("body")[0].setAttribute("onkeydown", "doKeyDown(event);"); 
+                  document.getElementsByTagName("body")[0].setAttribute("onkeyup", "doKeyUp(event);"); 
+                  var setTimer = " " + 3 + ":" + 00;
+                  var presentTimeSet = document.getElementById('timer').innerHTML = setTimer;
+                  startTimer();
+            }
+
+            
+
+
+
+            // var successGame;
+
+            // Timer
+            function startTimer() {
+                  
+
+                  
+                  var presentTime = document.getElementById('timer').innerHTML;
+
+                  var timeArray = presentTime.split(/[:]+/);
+                  var m = timeArray[0];
+                  var s = checkSecond((timeArray[1] - 1));
+
+                  if( s==59 ) {
+                        m = m - 1;
+                  }
+
+                  if((m + '').length == 1) {
+                        m = ' ' + m;
+                  }
+                  if( m < 0 ) {
+                        m = '59';
+                  }
+
+                  // Time Running Out Shake Animation
+                  var breakOne = ' 0:30';
+                  var breakTwo = ' 0:20';
+                  var breakThree = ' 0:10';
+                  var breakFour = ' 0:05';
+                  
+                  if(presentTime==breakOne || presentTime==breakTwo || presentTime==breakThree || presentTime==breakFour) { 
+                        document.getElementById('timer').className += " timeOhno";
+                        setTimeout(removeClass, 1000);
+                        function removeClass() {
+                              document.getElementById('timer').classList.remove("timeOhno");
+                        }    
+                  }
+
+                  if (success == 1 ) {      
+                        return;
+                  }
+
+                  // Time Out Modal
+                  var breakEnd = ' 0:01';
+                  if(presentTime==breakEnd) { 
+                        timeOut();
+                        document.getElementsByTagName("body")[0].removeAttribute("onkeydown", "doKeyDown(event);"); 
+                        document.getElementsByTagName("body")[0].removeAttribute("onkeyup", "doKeyUp(event);"); 
+                        return;
+                  }
+
+                  document.getElementById('timer').innerHTML = m + ":" + s;
+                  setTimeout(startTimer, 1000);  
+            }
+
+           
+                  
+            
+
+            function checkSecond(sec) {
+                  if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+                  if (sec < 0) {sec = "59"};
+                  return sec;
+            }
+
+            function timeOut() {           
+                  document.getElementById("failGame").classList.remove("overlayHide");  
+                  document.getElementById('timer').innerHTML = ' X:XX';
+            }
+
+            function successModal() {
+                  document.getElementById("successGame").classList.remove("overlayHide");  
+            }
+
+            function closeModal() {
+                  document.getElementById("successGame").classList.add("overlayHide"); 
+            }
+
+            // Panel Marker Counters
+            function panelCounter(count) {
+                  let count2 = "";
+                  for (let i = 0; i < count; i++) {
+                        count2 += `<div class="count"></div>`;
+                  }
+                  document.getElementById("levelsCounted").innerHTML = count2; 
+            }
+
+            function panelNumber(number) {
+                  let number1 = "";
+                  for (let i = 0; i < number; i++) {
+                        number1 += `<div class="number"></div>`;
+
+                  }
+                  document.getElementById("levelsNumber").innerHTML = number1; 
+            }
+
+            </script>
+	</head>
+
+      <body onload="runMaze();" >
+
+            <!-- Title Screen -->
+            <div class="overlay" id="titleScreen"></div>
+
+            <!-- Start Game Modal -->
+            <div class="overlay" id="startGame">
+            
+                  <div class="modal">
+                        <div class="modalHeader">
+                              <h2>Warning!</h2>
+                        </div>
+                        <div class="modalBody">
+                              <img class="iconLarge" src="images/icon-discount-harm.svg"/>
+                              <p> We are not responsible for savings related injuries.</p>
+                        </div>
+                        <div class="modalFooter">
+                              <button >Flee</button>
+                              <button onclick="startGame()">Proceed</button>
+                        </div>
+                  </div><!--modal-->
+            
+            </div>
+
+            <!-- Fail Game Modal -->
+            <div class="overlay overlayHide" id="failGame">
+            
+                  <div class="modal">
+                        <div class="modalHeader">
+                              <h2>Timed Out!</h2>
+                        </div>
+                        <div class="modalBody">
+                              <img class="iconLarge" src="images/icon-failed.svg"/>
+                              <p> Sorry, you are <strong>DOOMED</strong> to <br> pay full price. </p>
+                        </div>
+                        <div class="modalFooter">
+                              <button >Flee</button>
+                              <button onclick="restartGame()">Try Again</button>
+                        </div>
+                  </div><!--modal-->
+            
+            </div>
+
+            <!-- Success Game Modal -->
+            <div class="overlay overlayHide" id="successGame">
+            
+                  <div class="modal">
+                        <div class="modalHeader">
+                              <h2>SUCCESS!</h2>
+                        </div>
+                        <div class="modalBody">
+                              <img class="iconLarge" src="images/icon-success.svg"/>
+                              <p> You have escaped the <strong>Discount Dungeon</strong> in time to receive your store items. </p>
+                        </div>
+                        <div class="modalFooter">
+                              <button onclick="closeModal()">Collect!</button>
+                        </div>
+                  </div><!--modal-->
+            
+            </div>
+
+            <!-- Game -->
+            <div id="gameContainer">
+                  <canvas id="mazeCanvas" width=1500 height=700 ></canvas>
+                  <section id="characterInfo">
+                        <div class="sectionInfo timer">
+                              <h2>Remaining Time</h2>
+                              <div class="counter">
+                                    <div id="levelsCounted"></div>
+                                    <div id="levelsNumber"></div>
+
+                                    <!-- <p style="color: white"><span  id="levelCount">0 </span> /6</p> -->
+                              </div>
+                              
+                              <h3 id="timer" class="remaining"> 0:00</h3>
+                              
+                        </div>
+                        <div class="sectionInfo profile">
+                              <h2>Carlos C.</h2>
+                              <img src="images/image-5.jpg"/>
+                        </div>
+                        <div class="sectionInfo school">
+                              <div class="school-title">
+                                    <span class="percent-title">5<sup>%</sup></span>
+                                    <h2>Off Items</h2>
+                                    
+                              </div>
+                              <ul id="items">
+                                    <li>  
+                                          
+                                          <img src="images/item-1.jpg"/>
+                                          <div>
+                                                <span>Pencil</span>
+                                                <span class="amounts">
+                                                      <del>20</del> 
+                                                      <strong>19</strong>
+                                                </span>    
+                                          </div>
+                                    </li>
+                                    <li>  
+                                         
+                                          <img src="images/item-2.jpg"/>
+                                          <div>
+                                                <span>Hat</span>
+                                                <span class="amounts"> 
+                                                      <del>90</del>
+                                                      <strong>85.50</strong>
+                                                </span>
+                                          </div>
+                                    </li>
+                                    <li>  
+                                          
+                                          <img src="images/item-3.jpg"/>
+                                          <div>
+                                                <span>Chips</span>
+                                                <span class="amounts">
+                                                      <del>5</del>
+                                                      <strong>4.75</strong>
+                                                </span>
+                                          </div>
+                                    </li>
+                                    <li>  
+                                          
+                                          <img src="images/item-4.jpg"/>
+                                          <div>
+                                                <span>Puppy</span>
+                                                <span class="amounts">
+                                                      <del>150</del> 
+                                                      <strong>142.50</strong>
+                                                </span>
+                                          </div>
+                                    </li>
+
+                              </ul>
+                        </div>
+                  </section>
+            </div>
+	</body>
+</html>

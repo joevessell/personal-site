@@ -1,0 +1,335 @@
+body { 
+    margin: 0; 
+    background-color: gray;
+    font-family: Helvetica, sans-serif;
+    background: #223E3E url("https://joevessell.com/discount-dungeon/images/body-background.svg") no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+sup {
+    font-size: 10px;
+}
+
+.iconLarge {
+    width: 65px;
+    float: left;
+    margin: 0 20px;
+}
+
+/*Overlay */
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.62);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayHide {
+    display: none;
+}
+
+.modal {
+    height: 300px;
+    flex: 0 1 600px;
+    background: transparent url("https://joevessell.com/discount-dungeon/images/container-info3.svg") no-repeat center center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal .modalHeader h2 {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 30px;
+    margin: 20px 0 0;
+    text-shadow: 0px 2.5px #524358b4;
+}
+
+.modal .modalBody {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    width: 350px;
+}
+
+.modal .modalBody p { 
+    color: white;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.modal .modalFooter {
+    flex: 0 0 50px;
+    display: flex;
+    justify-content: space-around;
+    width: 350px;
+}
+
+.modal .modalFooter button {
+    width: 145px;
+    height: 66px;
+    flex: 0 1 145px;
+    margin-top: -5px;
+    appearance: none;
+    border: 0px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    text-shadow: 0px 2.5px #524358b4;
+    cursor: pointer;
+    background: transparent url("https://joevessell.com/discount-dungeon/images/button.svg") no-repeat top center;
+    background-size: cover;
+}
+
+.modal .modalFooter button:hover {
+    background-position: bottom center;
+}
+
+#titleScreen {
+    opacity: 1;
+    animation-delay: 7s;
+    animation-duration: 1s;
+    animation-name: titlescreen;
+    animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.507) url("https://joevessell.com/discount-dungeon/images/titlescreen.svg") no-repeat center center;
+    background-size: cover;
+    z-index: 40;
+    pointer-events: none;
+     /* display: none;  Here */
+} 
+
+@keyframes titlescreen {
+      0% {opacity:1;}
+      100% {opacity:0;}
+}
+
+/* Timer */
+.timeOhno {
+    animation-name: shake;
+	animation-duration: .5s;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(-3deg); }
+    20% { transform: rotate(3deg); }
+    30% { transform: rotate(0deg); }
+    40% { transform: rotate(3deg); }
+    50% { transform: rotate(-3deg); }
+    60% { transform: rotate(0deg); }
+    70% { transform: rotate(-3deg); }
+    80% { transform: rotate(3deg); }
+    90% { transform: rotate(0deg); }
+    100% { transform: rotate(-3deg); }
+}
+
+#gameContainer {
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Game Canvas */
+#mazeCanvas {
+    width: 100%;
+}
+
+/* Player Information */
+#characterInfo {
+    width: 100%;
+    background-color: #1f0c2560;
+    position: absolute;
+    bottom: -270px;
+    left: 0;
+    height: 245px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#characterInfo .sectionInfo {
+    flex: 0 1 375px;
+    height: 100%; 
+    /* padding: 1%;   */
+    background: transparent url("https://joevessell.com/discount-dungeon/images/container-info4.svg") no-repeat center center;
+    background-size: cover;
+}
+
+#characterInfo .sectionInfo h2 {
+    color: white;
+    text-shadow: 0px 2.5px #524358b4;
+    margin-top: 15px;
+    margin-bottom: 36px;
+}
+
+#characterInfo .sectionInfo h3 {
+    font-size: 95px;
+    margin: 0;
+    margin-top: -7px;
+    color: white;
+    text-shadow: 0px 8px #524358b4;
+    line-height: 1.4;
+}
+
+#characterInfo .sectionInfo img {
+    max-width: 125px;
+    border: 5px solid #CCC7D1;
+    border-radius: 100px;
+    margin-top: -15px;
+    box-shadow: 0px 8px #52435882;
+}
+
+#characterInfo .sectionInfo ul {
+    display: flex;
+    margin-left: -4px;
+}
+
+#characterInfo .sectionInfo li {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 1 75px;
+    position: relative;
+}
+
+#characterInfo .sectionInfo li div {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    background-color: #00000054;
+    border-radius: 3px;
+    color: white;
+    flex: 1 0 auto;
+    margin-top: -30px;
+    padding-top: 30px;
+    padding-bottom: 5px;
+    width: 93%;
+}
+
+#characterInfo .timer .counter {
+    position: relative;
+    width: 25%;
+    margin: 0 auto;
+}
+
+
+
+#characterInfo .timer .counter #levelsCounted, #characterInfo .timer .counter #levelsNumber {
+    height: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    gap:7px;
+    /* justify-content: space-between; */
+}
+
+#characterInfo .timer .counter #levelsCounted {
+    z-index: 10;
+}
+
+#characterInfo .timer .counter #levelsNumber {
+    z-index: 5;
+}
+
+#characterInfo .timer .counter #levelsNumber .number {
+    height: 10px;
+    background-color: #2f2735;
+    flex: 0 0 10px;
+    border-radius: 10px;
+}
+
+#characterInfo .timer .counter #levelsCounted .count {
+    height: 10px;
+    flex: 0 0 10px;
+    background-color: #fcc742;
+    border-radius: 15px;
+}
+
+.school-title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -15px
+}
+
+#characterInfo .sectionInfo li div .amounts {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+
+#characterInfo .sectionInfo li div span span, #characterInfo .sectionInfo li div span del {
+    flex: 1 0 100%;
+}
+
+#characterInfo .sectionInfo li div span del {
+    font-size: 14px;
+    opacity: .6;
+}
+
+#characterInfo .sectionInfo li img {
+    width: 50px;
+    height: 50px;
+    margin-top: -10px;
+    margin-bottom: 9px;
+    position: relative;
+    z-index: 5;
+    border-radius: 10px;
+    border-width: 4px;
+}
+
+.percent {
+    position: absolute;
+    background-color: white;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    top: -12px;
+    right: 0px;
+    box-shadow: 0px 4px #52435882;
+    padding: 4px;
+    font-size: 14px;
+    z-index: 10;
+}
+
+
+
+.percent-title {
+    background-color: white;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    box-shadow: 0px 4px #52435882;
+    padding: 4px;
+    font-size: 14px;
+    width: 18px;
+    margin-right: 5px;
+    margin-top: -22px;
+}
