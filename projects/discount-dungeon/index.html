@@ -290,34 +290,34 @@
                         function placeWall(x,y,direction){
 
                               if (x > 8) {
-                                          var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/wall-2.png' );
+                                          var texture = new THREE.TextureLoader().load( 'https://joevessell.com/projects/discount-dungeon/images/wall-2.png' );
                                           var wallMaterial = new THREE.MeshLambertMaterial({
                                                 map: texture
                                           });
                               
                               } else if ( x < 8 && y+1===x ) {
 
-                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-1.png' );
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/projects/discount-dungeon/images/bricks-1.png' );
                                     var wallMaterial = new THREE.MeshLambertMaterial({
                                           map: texture
                                     } );
 
                               } else if ( x < 8 && x+2===y ) {
 
-                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-2.png' );
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/projects/discount-dungeon/images/bricks-2.png' );
                                     var wallMaterial = new THREE.MeshLambertMaterial({
                                           map: texture
                                     } );
                               
                               } else if ( x < 8 && y+2===x || x+1===y ) {
 
-                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-3.png' );
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/projects/discount-dungeon/images/bricks-3.png' );
                                     var wallMaterial = new THREE.MeshLambertMaterial({
                                           map: texture
                                     } );
 
                                } else {
-                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/discount-dungeon/images/bricks-4.png' );
+                                    var texture = new THREE.TextureLoader().load( 'https://joevessell.com/projects/discount-dungeon/images/bricks-4.png' );
                                     var wallMaterial = new THREE.MeshLambertMaterial({
                                           map: texture
                                     } );
@@ -443,19 +443,19 @@
                                     var items = [];
 
                                     items.push(
-                                          { x:3, y:9, image: 'https://joevessell.com/discount-dungeon/images/item-1.jpg' }
+                                          { x:3, y:9, image: 'https://joevessell.com/projects/discount-dungeon/images/item-1.jpg' }
                                     );
 
                                     items.push(
-                                          { x:3, y:10, image: 'https://joevessell.com/discount-dungeon/images/item-2.jpg' }
+                                          { x:3, y:10, image: 'https://joevessell.com/projects/discount-dungeon/images/item-2.jpg' }
                                     );
 
                                     items.push(
-                                          { x:5, y:9, image: 'https://joevessell.com/discount-dungeon/images/item-3.jpg' }
+                                          { x:5, y:9, image: 'https://joevessell.com/projects/discount-dungeon/images/item-3.jpg' }
                                     );
 
                                     items.push(
-                                          { x:5, y:10, image: 'https://joevessell.com/discount-dungeon/images/item-4.jpg' }
+                                          { x:5, y:10, image: 'https://joevessell.com/projects/discount-dungeon/images/item-4.jpg' }
                                     );
 
                                     return items;
