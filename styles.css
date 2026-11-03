@@ -98,7 +98,7 @@ a.primary {
     align-items: center;
 }
 
-a.primary svg {
+a.primary svg, a.primary .icon {
     width: 25px;
     height: 25px;
     fill: var(--color-ltblue-50);
