@@ -32,7 +32,7 @@ const heroCards = [
     {	
         key: 4,
         title: "Great Goals",
-        details: 'Founder, UX Researcher, Designer and Developer ',
+        details: 'Founder, UX Researcher, Designer, and Developer',
         colorHighlight: "#ee443d",
         colorBackground: "#ffebeb",
         img: "card-great-goals.png",
@@ -63,7 +63,7 @@ const heroCards = [
     {	
         key: 7,
         title: "PBIS Rewards Student",
-        details: 'Designer, Front-End Developer',
+        details: 'Designer and Front-End Developer',
         colorHighlight: "#016132",
         colorBackground: "#ecf5ef",
         img: "card-pbis-rewards-student.png",

@@ -17,7 +17,7 @@ function cardMap() {heroCards.map((heroCard, i) => {
 
     let location = '';
     if (heroCard.linkLocation==="only")  { 
-        location = `<p><span class="chip">Portfoilo Only</span></p>`;
+        location = `<p><span class="chip">Portfolio Only</span></p>`;
     } else {
         location =`
         <a class="primary ${heroCard.linkLocation==="new" ? "" : "down"}" target="${heroCard.linkLocation==="new" ? "_blank" : "_self"}" 
@@ -32,7 +32,7 @@ function cardMap() {heroCards.map((heroCard, i) => {
     cards += `
     
     <button onclick="goToLocation(this)" style="background-color: ${heroCard.colorBackground};" key=${i} class="card">
-    ${heroCard.linkLocation==="only" ? `<div class="message"><p>Portfoilo</br> Only</p></div>` : ''}
+    ${heroCard.linkLocation==="only" ? `<div class="message"><p>Portfolio</br> Only</p></div>` : ''}
         <img src="/images/card/${heroCard.img}" alt="${heroCard.title}" />
         <div class="content">
             <h3>${heroCard.title}</h3>
