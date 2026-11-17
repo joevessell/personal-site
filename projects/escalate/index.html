@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escalate</title>
+  <meta name="description" content="A retro arcade ecosystem game. Balance flowers, butterflies and hornets on a tiny spinning planet. Can you keep all three alive for 100 seconds?">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://www.joevessell.com/projects/escalate/">
+
+  <!-- Share previews (Open Graph: iMessage, Slack, Facebook, LinkedIn, Discord) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Joe Vessell">
+  <meta property="og:title" content="Escalate">
+  <meta property="og:description" content="Can you create an ecosystem that lasts over 100.0s? A retro arcade game of flowers, butterflies and hornets on a spinning planet.">
+  <meta property="og:url" content="https://www.joevessell.com/projects/escalate/">
+  <meta property="og:image" content="https://www.joevessell.com/projects/escalate/cover.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1350">
+  <meta property="og:image:height" content="904">
+  <meta property="og:image:alt" content="ESCALATE title screen: pixel-art logo over a dark planet with a yellow START button.">
+
+  <!-- X / Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Escalate">
+  <meta name="twitter:description" content="Can you create an ecosystem that lasts over 100.0s? A retro arcade game of flowers, butterflies and hornets on a spinning planet.">
+  <meta name="twitter:image" content="https://www.joevessell.com/projects/escalate/cover.png">
+  <meta name="twitter:image:alt" content="ESCALATE title screen: pixel-art logo over a dark planet with a yellow START button.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="on-title">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- Title screen -->
+  <section id="title-screen" class="title-screen" aria-labelledby="title-heading">
+    <h1 id="title-heading" class="title">ESCALATE</h1>
+    <p class="tagline">Can you create an ecosystem that lasts over 100.0s?</p>
+    <button type="button" id="start-game" class="btn btn-start" autofocus>START</button>
+    <ul class="how">
+      <li><span class="chip cubebell"></span><b>CUBEBELL</b> A plant. Never moves.</li>
+      <li><span class="chip butterblock"></span><b>BUTTERBLOCK</b> Divides when it touches a Cubebell.</li>
+      <li><span class="chip rubytile"></span><b>RUBYTILE</b> Eats Butterblocks and divides. Starves if it waits too long.</li>
+    </ul>
+  </section>
+
+  <!-- Game -->
+  <main id="game" class="layout" data-phase="title" inert>
+    <div class="stage">
+      <div class="hud">
+        <div class="hud-item"><span class="hud-label">TIME</span><span class="hud-value" id="hud-time">000.0</span></div>
+        <div class="hud-item"><span class="hud-label">GOAL</span><span class="hud-value">100.0</span></div>
+        <div class="hud-item"><span class="hud-label">BEST</span><span class="hud-value" id="hud-best">000.0</span></div>
+      </div>
+      <div class="progress" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+      <p class="message" id="message" role="status"></p>
+
+      <div class="planet-wrap">
+        <canvas id="planet" width="760" height="760" tabindex="0"
+                aria-label="Planet Escalate. Drag or use the arrow keys to rotate."></canvas>
+        <div class="mini-status" id="mini-status" aria-label="Your choices">
+          <div class="mini-row"><span class="chip cubebell"></span><b id="mini-cubebell">0</b><span class="mini-dim" id="mini-start-cubebell"></span></div>
+          <div class="mini-row"><span class="chip butterblock"></span><b id="mini-butterblock">0</b><span class="mini-dim" id="mini-start-butterblock"></span></div>
+          <div class="mini-set" id="mini-butter-speed"></div>
+          <div class="mini-row"><span class="chip rubytile"></span><b id="mini-rubytile">0</b><span class="mini-dim" id="mini-start-rubytile"></span></div>
+          <div class="mini-set" id="mini-ruby-speed"></div>
+          <div class="mini-set" id="mini-ruby-starve"></div>
+          <div class="mini-set" id="mini-sim"></div>
+          <button type="button" class="btn btn-secondary btn-small" id="mini-pause">PAUSE</button>
+        </div>
+        <div class="toast" id="toast" hidden>GOAL REACHED!</div>
+        <div class="banner" id="banner" hidden>
+          <p class="banner-title" id="banner-title"></p>
+          <p class="banner-sub" id="banner-sub"></p>
+          <button type="button" class="btn btn-primary" id="banner-btn">TRY AGAIN</button>
+        </div>
+      </div>
+      <p class="hint">DRAG TO ROTATE · ARROWS ROTATE · SPACE PAUSE · R RESET</p>
+    </div>
+
+    <aside class="panel" aria-label="Ecosystem controls">
+      <p class="panel-message" id="panel-message" aria-hidden="true"></p>
+      <section class="stats">
+        <div class="stat"><span class="chip cubebell"></span><span class="name">CUBEBELL</span><span class="value" id="stat-cubebell">0</span></div>
+        <div class="stat"><span class="chip butterblock"></span><span class="name">BUTTERBLOCK</span><span class="value" id="stat-butterblock">0</span></div>
+        <div class="stat"><span class="chip rubytile"></span><span class="name">RUBYTILE</span><span class="value" id="stat-rubytile">0</span></div>
+      </section>
+
+      <div class="panel-tools">
+        <button type="button" id="random" class="btn btn-secondary btn-small">RANDOM</button>
+      </div>
+
+      <section class="group">
+        <h2 class="species-head cubebell"><span><span class="chip cubebell"></span> CUBEBELL</span></h2>
+        <div id="controls-cubebell"></div>
+      </section>
+
+      <section class="group">
+        <h2 class="species-head butterblock"><span><span class="chip butterblock"></span> BUTTERBLOCK</span></h2>
+        <div id="controls-butterblock"></div>
+      </section>
+
+      <section class="group">
+        <h2 class="species-head rubytile"><span><span class="chip rubytile"></span> RUBYTILE</span></h2>
+        <div id="controls-rubytile"></div>
+      </section>
+
+      <details class="group system">
+        <summary><h2>SYSTEM</h2></summary>
+        <div id="controls-system"></div>
+        <div class="toggles">
+          <label><input type="checkbox" id="auto-rotate" checked> Auto-rotate</label>
+          <label><input type="checkbox" id="sound" checked> Sound</label>
+          <label hidden><input type="checkbox" id="show-grid"> Show 12 × 12 grid</label>
+        </div>
+      </details>
+
+      <div class="buttons">
+        <button type="button" id="primary" class="btn btn-primary">START</button>
+        <button type="button" id="pause" class="btn" disabled>PAUSE</button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="sfx.js"></script>
+  <script src="ceralis.js"></script>
+</body>
+</html>
