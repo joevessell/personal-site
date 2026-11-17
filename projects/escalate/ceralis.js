@@ -66,12 +66,24 @@
     { key: 'maxBugs', group: 'live', label: 'Max per species', min: 0, max: 3000, step: 50, value: 2500, random: false, hidden: true },
     { key: 'simSpeed', group: 'system', label: 'Sim speed', accent: '#fff', min: 0.25, max: 4, step: 0.25, value: 0.5, random: false, fmt: v => `${v}×` },
   ];
-  /** A random value on the slider's step grid. */
-  function randomSetting(s) {
+  /**
+   * A random value on the slider's step grid. `spread` is the fraction of the
+   * range to pick from, centered on the middle (1 = anywhere, 0.4 = 30%-70%).
+   */
+  function randomSetting(s, spread = 1) {
     const steps = Math.round((s.max - s.min) / s.step);
-    return Number((s.min + Math.floor(Math.random() * (steps + 1)) * s.step).toFixed(4));
+    const lo = Math.round(steps * (1 - spread) / 2);
+    const hi = steps - lo;
+    const n = lo + Math.floor(Math.random() * (hi - lo + 1));
+    return Number((s.min + n * s.step).toFixed(4));
   }
-  const settings = Object.fromEntries(SETTINGS.map(s => [s.key, s.value ?? randomSetting(s)]));
+  // First load: values near the middle of each slider so the opening ecosystem is balanced.
+  // RANDOM still rolls across the full range.
+  const FIRST_LOAD_SPREAD = 0.4;
+  // Phones get a slower default sim so the small planet is easier to follow.
+  const isPhone = window.matchMedia('(max-width: 760px)').matches;
+  const settings = Object.fromEntries(SETTINGS.map(s => [s.key, s.value ?? randomSetting(s, FIRST_LOAD_SPREAD)]));
+  if (isPhone) settings.simSpeed = 0.25;
 
   // ------------------------------------------------------------- vector math
   const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
