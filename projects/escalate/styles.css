@@ -92,11 +92,28 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* Auto margins center the content when it fits; when it's taller than the
+     screen (phones), it starts at the top and the overlay scrolls instead of
+     clipping. justify-content: center would cut off the top, unreachable. */
+  justify-content: flex-start;
   gap: 32px;
   padding: 24px 16px;
   text-align: center;
   background: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.title-screen > :first-child { margin-top: auto; }
+.title-screen > :last-child { margin-bottom: auto; }
+
+@media (max-width: 760px) {
+  .title-screen { gap: 24px; }
+  .title-screen .how { font-size: 20px; gap: 16px; }
+  /* Put each description on the line below its term. */
+  .title-screen .how li { display: block; }
+  .title-screen .how .chip { display: inline-block; margin-right: 10px; vertical-align: -3px; }
+  .title-screen .how b::after { content: "\A"; white-space: pre; }
 }
 
 .title {
@@ -331,10 +348,18 @@ h2 .note {
 .stat .name { flex: 1; }
 .stat .value { font-size: 12px; color: var(--yellow); font-variant-numeric: tabular-nums; }
 
-.chip { width: 12px; height: 12px; flex: none; box-shadow: 0 0 0 2px #000; }
-.chip.cubebell { background: var(--cubebell); }
-.chip.butterblock { background: var(--butterblock); }
-.chip.rubytile { background: var(--rubytile); }
+/* Species icons: still pixel-art sprites set as --icon-* by ceralis.js. */
+.chip {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background: center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.chip.cubebell { background-image: var(--icon-cubebell); }
+.chip.butterblock { background-image: var(--icon-butterblock); }
+.chip.rubytile { background-image: var(--icon-rubytile); }
+.how .chip { width: 22px; height: 22px; align-self: center; }
 
 .group { margin-bottom: 20px; }
 
@@ -459,7 +484,7 @@ h2 .note {
     pointer-events: none;
   }
   .mini-row { display: flex; align-items: center; gap: 6px; }
-  .mini-row .chip { width: 9px; height: 9px; }
+  .mini-row .chip { width: 12px; height: 12px; }
   .mini-row b { color: #fff; font-weight: normal; font-variant-numeric: tabular-nums; }
   .mini-set, .mini-dim { color: var(--text-dim); font-size: 7px; }
 

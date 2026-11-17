@@ -579,6 +579,12 @@
     });
   }
 
+  // Still (first-frame, full-brightness) sprite as each .chip icon in the UI.
+  for (const kind of Object.keys(SPRITE_ART)) {
+    const still = sprites[kind][0][LEVELS - 1].toDataURL();
+    document.documentElement.style.setProperty(`--icon-${kind}`, `url("${still}")`);
+  }
+
   /**
    * Draw a sprite on the sphere at `p`, its "up" along tangent `fwd`.
    * The affine transform maps the sprite onto the projected tangent plane,
